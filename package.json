@@ -3,5 +3,8 @@
     "version": "1.0.0",
     "description": "A site to show a hello world example of using Netlify Functions",
     "author": "samet-byte",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.0"
+    }
 }
