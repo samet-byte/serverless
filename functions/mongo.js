@@ -28,9 +28,13 @@ exports.handler = async (event) => {
             query = {}; // You can modify this based on your requirements
         }
 
+        console.log('Query:', query);
         // Perform your MongoDB operations here
-        const result = await collection.find(query).toArray();
-
+        if (Object.keys(query).length === 0) {
+            const result = await collection.find({}, {title: 1}).skip(0).limit(10).toArray();
+        } else {
+            const result = await collection.find(query).toArray();
+        }
         // Close the client to release resources
         await client.close();
 
