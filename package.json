@@ -5,6 +5,7 @@
     "author": "samet-byte",
     "license": "ISC",
     "dependencies": {
-        "dotenv": "^16.4.0"
+        "dotenv": "^16.4.0",
+        "mongodb": "^6.3.0"
     }
 }
