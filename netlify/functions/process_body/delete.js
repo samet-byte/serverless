@@ -1,4 +1,4 @@
-const paramConfig = require('../../../paramConfig');
+const paramConfig = require('../../../custom_config/paramConfig');
 const { MongoClient, ObjectId } = require('mongodb');
 
 async function deleteFromMongoDB(event) {

@@ -8,7 +8,7 @@ module.exports = function (event) {
 
     const id = event.queryStringParameters.id || null;
 
-    const key = event.queryStringParameters.key || null;
+    const q = event.queryStringParameters.q || null;
 
     // const sortParams = event.queryStringParameters.sort || null;
 
@@ -49,7 +49,7 @@ module.exports = function (event) {
         collection,
         skip,
         limit,
-        key,
+        q,
         sort,
         id
      };

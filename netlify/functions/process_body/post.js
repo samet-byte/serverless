@@ -1,6 +1,6 @@
 // post stuff to mongodb
 
-const paramConfig = require('../../../paramConfig');
+const paramConfig = require('../../../custom_config/paramConfig');
 const { MongoClient } = require('mongodb');
 
 let newItem = null;
@@ -26,7 +26,9 @@ async function postDataToMongoDB(event) {
 
         dataToInsert = {
             // ...dataToInsert,
-            ...body    
+            ...body,
+            dateAdded: new Date().toISOString(),
+            dateEdited: new Date().toISOString(),    
         };
     
 

@@ -3,6 +3,11 @@ const post = require('./process_body/post');
 const put_patch = require('./process_body/put_patch');
 const deleteSingle = require('./process_body/delete');
 
+const defaultHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+};
+
 exports.handler = async (event) => {
     const httpMethod = event.httpMethod;
     
@@ -26,8 +31,7 @@ exports.handler = async (event) => {
             response = {
                 statusCode: 200,
                 headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
+                    ...defaultHeaders,
                 },
                 body: await get(event),
 
@@ -38,8 +42,7 @@ exports.handler = async (event) => {
             response = {
                 statusCode: 201,
                 headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
+                    ...defaultHeaders,
                 },
                 body: await post(event)
             };
@@ -60,8 +63,7 @@ exports.handler = async (event) => {
                 response = {
                     statusCode: 202,
                     headers: {
-                        'Access-Control-Allow-Origin': '*',
-                        'Content-Type': 'application/json',
+                        ...defaultHeaders,
                 },
                 body: await put_patch(event)
             };
@@ -71,8 +73,7 @@ exports.handler = async (event) => {
             response = {
                 statusCode: 200,
                 headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
+                    ...defaultHeaders,
                 },
                 body: await deleteSingle(event)
             };
@@ -83,8 +84,7 @@ exports.handler = async (event) => {
             response = {
                 statusCode: 200,
                 headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
+                    ...defaultHeaders,
                 },
             };
             break;
@@ -94,8 +94,7 @@ exports.handler = async (event) => {
             response = {
                 statusCode: 400,
                 headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
+                    ...defaultHeaders,
                 },
                 body: { message: 'Unsupported HTTP method' },
             };

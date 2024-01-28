@@ -1,7 +1,7 @@
 // patch.js
 
 const { MongoClient, ObjectId } = require('mongodb');
-const paramConfig = require('../../../paramConfig');
+const paramConfig = require('../../../custom_config/paramConfig');
 
 async function patchDataInMongoDB(event) {
     const {
@@ -26,7 +26,10 @@ async function patchDataInMongoDB(event) {
         // Update data
         const result = await myCollection.updateOne(
             { _id: new ObjectId(id) },
-            { $set: JSON.parse(event.body) }
+            { $set: {
+                ...JSON.parse(event.body),
+                dateEdited: new Date().toISOString(),
+            } }
         );
 
         console.log(`Matched ${result.matchedCount} document(s) and modified ${result.modifiedCount} document(s).`);

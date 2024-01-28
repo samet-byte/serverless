@@ -17,12 +17,61 @@
         <p>
             To add Netlify Functions, create a JavaScript, TypeScript, or Go function to your project in a <code>netlify/functions</code> directory. You can customize the address for your functions using Netlify's Redirects API
         </p>
-        <h2>Examples</h2>
+        <h2>How to use?</h2>
         <ul>
             <li><a href="/.netlify/functions/hello?name=you">Hello World</a> ( /.netlify/functions/hello?name=you )</li>
             <li><a href="/api/hello?name=you">Hello World</a> ( /api/hello?name=you )</li>
-            <li><a href="/api/crud">Posts</a>( /api/crud )</li>
-            <li><a href="/api/crud?col=users">Users</a>( /api/crud?col=users )</li>
+            <br/>
+            <li><a href="/api/crud">All Users</a>( GET  /api/crud )</li>
+            <li><a href="/api/crud?db=sample_mflix&col=users">All Users</a>( GET /api/crud?db=sample_mflix&col=users )</li>
+            <li><a href="/api/crud?id=">Single User Users</a>( GET  /api/crud?id={id} )</li>
+            <br/>
+            <li>
+                ( POST /api/crud )
+                <br/>
+                <strong>body: </strong>{ "field1": "value1", "field2": "value2" }
+            </li>
+            <br/>
+            <li>
+                ( PUT /api/crud?id={id} )
+                <br/>
+                <strong>body: </strong>{ "field1": "value1", "field2": "value2" }
+            </li>
+            <br/>
+            <li>
+                ( PATCH /api/crud?id={id} )
+                <br/>
+                <strong>body: </strong>{ "field1": "value1" }
+            </li>
+            <br/>
+            <li>
+                ( DELETE /api/crud?id={id} )
+            </li>
+            <br/>
+            <li>
+                ( OPTIONS /api/crud ) <strong>> CORS</strong>
+            </li>
+            <br/>
+            <li>
+                ( HEAD /api/crud ) <strong>> CORS</strong>
+            </li>           
+        </ul>
+
+        <h2>All Parameters</h2>
+        <ul>
+            <li>uri (MongoDB URI)</li>
+            <li>db (MongoDB Database)</li>
+            <li>col (MongoDB Collection)</li>
+            <li>skip (Default: 0)</li>
+            <li>limit (Default: 100)</li>
+            <li>sort (Default: {})
+                <br>
+                Usage: sort=name,1*bDay,-1 (1 for 'asc', -1 for 'desc')</li>
+            <li>id</li>
+            <li>q (Search in all fields)
+                <br>
+                Usage: q=dude
+            </li>
         </ul>
 
 
@@ -43,7 +92,7 @@
             <a href="https://app.netlify.com/start/deploy?repository=https://github.com/netlify/example-hello-world-functions&utm_campaign=dx-examples"><img src="https://www.netlify.com/img/deploy/button.svg" class="dtn" alt="Deploy to Netlify"></a>
         </p>
 
-        <p><small>Clicking the button will clone <a href="https://github.com/netlify/example-hello-world-functions">this repo</a> and deploy it as a new site on <a href="https://netlify.com/?utm_campaign=dx-examples">Netlify</a></small></p>
+        <p><small>Clicking the button will clone <a href="https://github.com/samet-byte/serverless">Netlify Serverless Open Source Code</a></small></p>
     </div>
 
 </body>

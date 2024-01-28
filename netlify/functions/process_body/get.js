@@ -3,7 +3,7 @@
 // const dbConfig = require('../../../dbConfig');
 // const { parse } = require('dotenv');
 
-const paramConfig = require('../../../paramConfig');
+const paramConfig = require('../../../custom_config/paramConfig');
 const { MongoClient, ObjectId } = require('mongodb');
 
 async function getDataFromMongoDB(event) {
@@ -25,6 +25,8 @@ async function getDataFromMongoDB(event) {
 
         if (id) {
             result =  await getOne(myCollection, event);
+        } else if (event.queryStringParameters.last) {
+            result =  await getLastOrFirstItem(myCollection, event);
         } else result =  await getAll(myCollection, event);
         isSuccessful = true;
     } catch (error) {
@@ -36,19 +38,13 @@ async function getDataFromMongoDB(event) {
 }
 
 async function getAll(myCollection, event) {
-    const { skip, limit, key, sort } = paramConfig(event);
-    
-
+    const { skip, limit, q, sort } = paramConfig(event);
     // console.log(sort);
-
-
-   
-
      
     let query = {};
-    if (key) {
-        console.warn('key', key);
-        query = await findAllOccurancesQuery(event, myCollection);
+    if (q) {
+        console.warn('q=', q);
+        query = await findAllOccurancesQuery(q, myCollection);
     }
 
     const result = await myCollection
@@ -64,8 +60,24 @@ async function getAll(myCollection, event) {
 }
 
 async function getOne(myCollection, event) {
+    console.log("_id: " + event.queryStringParameters.id)
     const result = await myCollection.findOne({ _id: new ObjectId(event.queryStringParameters.id) });
     return result;
+}
+
+async function getLastOrFirstItem(myCollection, event) {
+    let fetchWhich = -1;
+    if (event.queryStringParameters.first || event.queryStringParameters.last === 'false' || event.queryStringParameters.last === '0') {
+        fetchWhich = 1;
+    }
+    try {
+        const result = await myCollection.find({}).sort({dateEdited: fetchWhich}).limit(1).toArray();
+        return {...result[0]};
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+    
 }
 
 
@@ -83,7 +95,7 @@ async function findAllOccurancesQuery(key, collection) {
         // console.log(fieldNames);
 
         for (const fieldName of fieldNames) {
-            const fieldQuery = { [fieldName]: { $regex: new RegExp("lynn", "i") } };
+            const fieldQuery = { [fieldName]: { $regex: regexPattern } };
             // console.log(fieldQuery);
             orClauses.push(fieldQuery);
         }
