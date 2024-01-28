@@ -32,7 +32,7 @@ exports.handler = async (event) => {
         const result = await collection
                                 .find(query)
                                 // .skip(10)
-                                .limit(parseInt(event.queryStringParameters.limit) || 5000)
+                                .limit(parseInt(event.queryStringParameters.limit) || 100)
                                 .toArray();
         
         // Close the client to release resources
